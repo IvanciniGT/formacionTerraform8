@@ -30,24 +30,29 @@ resource "docker_image" "mi_imagen" { # Declarar un recurso y dar su configuraci
                                                  # Y el tipo de recurso
                                                  # El nombre del recurso nos sirve como IDENTIFICADOR del recurso dentro del script.
                                                  # El nombre del recurso lo usamos como una VARIABLE en programación!
-    name            = "nginx:latest"
+                    # Interpolación de textos
+    name            = "${var.imagen_repo}:${var.imagen_tag}"
 } # < apply : Descargar la imagen de contenedor = docker image pull
 
 resource "docker_container" "mi_contenedor" { 
-    name            = "minginx" 
+    name            = var.nombre_contenedor
     image           = docker_image.mi_imagen.image_id # "sha256:ac232364af842735579e922641ae2f67d5b8ea97df33a207c5ea05f60c63a92d" # Este es el valor que debe ir aquí!
                                                 # Al hacer esto consigo: 
                                                 # - El valor real... que se haya descargado... y no un valor que he tomado en un momento dado y que posteriormente puede no seguir sirviendo
                                                 # - Consigo generar una dependencia entre recursos, que influirá en el grafo que terraform calcula.
-    env             = [ "VARIABLE1=valor1" ]
-    ports {
-        internal    = 80            # http
-        external    = 8080
-        ip          = "127.0.0.1"
-    }
-    ports {
-        internal    = 443            # https
-        external    = 8443
+    cpu_shares      = var.cuota_cpu # Cuota de uso de la CPU en base 1024 = el equivalente a uncore al 100%
+    env             = [ for clave, valor in var.variables_entorno:
+                        "${clave}=${valor}" ]
+                        
+    # Esta sintaxis SOLO VALE PARA BLOQUES DINAMICOS!!!!!!!
+    dynamic "ports" {
+        for_each        = var.puertos
+        iterator        = puerto # Llamemos a cada uno de ellos "puerto"
+        content{
+            internal    = puerto.value.interno
+            external    = puerto.value.externo
+            ip          = puerto.value.direccion_ip
+        }
     }
 } # < apply : Crear el contenedor : docker container create
 
