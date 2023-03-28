@@ -144,3 +144,22 @@ Imprescindible asignarles un tipo de datos:
 - Si llegados a este punto, terraform no ha conseguido un valor para una variable, lo pide por la terminal de forma interactiva
   ^^^^ EVIDENTEMENTE ESTO IMPIDE CUALQUIER AUTOMATIZACION
 - Si aún así, terraform no consigue un valor para una variable : SE PARA. No se ejecuta con variables sin asignar
+
+
+---
+
+Operador AND
+
+valor1 AND valor2
+TRUE        TRUE            TRUE
+FALSE       TRUE            FALSE
+TRUE        FALSE           FALSE
+FALSE       FALSE           FALSE
+FALSE       SIN ASIGNAR     OSTION EN TO' LA JETA !
+
+valor1 AND EN CORTOCIRCUITO  valor2
+TRUE        TRUE        TRUE
+FALSE       TRUE        FALSE
+TRUE        FALSE       FALSE
+FALSE       FALSE       FALSE
+FALSE       SIN ASIGNAR FALSE

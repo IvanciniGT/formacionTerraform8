@@ -41,6 +41,9 @@ resource "docker_container" "mi_contenedor" {
                                                 # - El valor real... que se haya descargado... y no un valor que he tomado en un momento dado y que posteriormente puede no seguir sirviendo
                                                 # - Consigo generar una dependencia entre recursos, que influirá en el grafo que terraform calcula.
     cpu_shares      = var.cuota_cpu # Cuota de uso de la CPU en base 1024 = el equivalente a uncore al 100%
+                     # Si a una propiedad de un recurso le asigno el valor null
+                     # Es como si no hubioera definido la propiedad
+                     # No se le suminitra información al provider al respecto de la propiedad
     env             = [ for clave, valor in var.variables_entorno:
                         "${clave}=${valor}" ]
                         

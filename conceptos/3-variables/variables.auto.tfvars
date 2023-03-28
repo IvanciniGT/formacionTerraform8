@@ -1,6 +1,6 @@
 # Me sirve de plantilla para montar archivos de variables customizados
 nombre_contenedor   = "minginx"
-cuota_cpu           = 1024
+cuota_cpu           = null
 
 imagen_repo         = "nginx"
 imagen_tag          = "latest"
