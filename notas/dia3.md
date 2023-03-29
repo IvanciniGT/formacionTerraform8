@@ -176,7 +176,61 @@ Si lo ejecuto cada hora, qué tengo?
 - Un sistema de Monitorización
 - Junto con un doctor, que si ha habido algún problema me lo arregla... alguien torpe ha borrado el entorno
 
+
+---
+
+Qué estabamos metiendo en un script?
+- Recursos
+- Variables locales
+- Parámetros (variables)
+- Configuración de los providers
+- Salidas
+- Listado de providers que necesito
+
 ---
 
 Cuando escribimos un programa... un poquito decente y complejo....
-Tiramos ahi dentro de un fichero, lines ylineas y lineas de código al tuntun ???
+Tiramos ahi dentro de un fichero, lines y lineas y lineas de código al tuntun ???
+
+Cuando hacemos código, ese código solemos meterlo en funciones/métodos/procedimientos... por qué?
+- Reutilizarlo
+- Más fácilmente interpretable 
+- Más fácilmente mantenible
+
+En terraform igual... sabeis el nombre que reciben esos procedimientos / metodos, funciones en terraform? MODULOS
+
+función (entradas) -> Resultado
+
+Qué estabamos metiendo en un script?
+√ Recursos                              <<< LO PRINCIPAL !
+√ Variables locales
+√ Parámetros (variables)
+- Configuración de los providers
+√ Salidas
+√ Listado de providers que necesito
+
+
+Quiero un cluster de maquinas para instalar ES:
+Subred dentro de una red
+2 maquinas maestro
+2 maquinas datos
+2 maquinas coordinadores
+balanceador delante de los coordinadores
+1 maquina kibana
+
+quiero montar un entorno elasticSearch:
+    nº maquinas maestras: 2, de tipo xlarge
+    nº maqiunas datos: 4 de tipo 2xlarge
+    nº de maquiabns coordinadores: 2 large
+    balanceador: large
+    2 kibana: xlarge
+    balanceador: large
+    
+quiero montar un entorno elasticSearch:
+    nº maquinas maestras: 2, de tipo xlarge
+    nº maqiunas datos: 2 de tipo 2xlarge
+    nº de maquiabns coordinadores: 2 large
+    balanceador: large
+    1 kibana: large
+    balanceador: large
+    

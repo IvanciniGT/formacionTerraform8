@@ -217,7 +217,8 @@ En esos archivos vamos a declarar bloques de código. Esos bloques pueden ser de
                     Declarar parámetros de ejecución de nuestro script
 - locals            JUEVES
                     Declarar variables de uso interno de nuestro script
-- module            JUEVES
+- module            JUEVES 
+                    Un trozo de código reutilizable en multitud de scripts
 ---------- ^ Y hasta aquí no vamos a tocar NI UN CLOUD!
 - data              VIERNES
 - Y YA !
@@ -227,7 +228,7 @@ En esos archivos vamos a declarar bloques de código. Esos bloques pueden ser de
 Ese comando (terraform) me permite ejecutar ORDENES sobre scripts de terraform. Aquí tenemos lenguaje imperativo:
 
 - init              Descargar los providers que vamos a usar
-                    Descargar .... otra cosita... de la que ya hablaremos
+                    Descargar .... otra cosita... de la que ya hablaremos: MODULOS
 - validate          Valida un script (sintacticamente)
 - refresh           Sincroniza el estado ACTUAL REAL del proveedor en Terraform (Me actualiza el fichero .tfstate)
 - plan              Planificar las tareas necesarias para conseguir el ESTADO DESEADO partiendo del ESTADO ACTUAL que terraform conoce
