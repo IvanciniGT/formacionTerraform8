@@ -175,3 +175,8 @@ Cada hora? Tiene sentido? DEVOPS !!!!!! y que bonita es la IDEMPOTENCIA!!!!!
 Si lo ejecuto cada hora, qué tengo? 
 - Un sistema de Monitorización
 - Junto con un doctor, que si ha habido algún problema me lo arregla... alguien torpe ha borrado el entorno
+
+---
+
+Cuando escribimos un programa... un poquito decente y complejo....
+Tiramos ahi dentro de un fichero, lines ylineas y lineas de código al tuntun ???
