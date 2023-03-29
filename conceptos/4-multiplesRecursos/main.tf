@@ -76,3 +76,24 @@ resource "docker_container" "mis_contenedores_mas_personalizados_desde_mapa" {
         ip          = each.value.ip
     }
 }
+resource "docker_container" "mis_contenedores_mas_personalizados_desde_lista" { 
+    count           = length(var.contenedores_mas_personalizados_como_lista)
+    name            = var.contenedores_mas_personalizados_como_lista[count.index].contenedor
+    image           = docker_image.mi_imagen.image_id 
+    ports {
+        internal    = 80           
+        external    = var.contenedores_mas_personalizados_como_lista[count.index].puerto_externo
+        ip          = var.contenedores_mas_personalizados_como_lista[count.index].ip
+    }
+}
+
+## Recursos Condicionales a través de un bucle
+resource "docker_container" "mi_balanceador" {
+    count           = length(var.contenedores_personalizados) > 1 ? 1 : 0
+    name            = "balanceador" 
+    image           = docker_image.mi_imagen.image_id 
+    ports {
+        internal    = 80
+        external    = 81
+    }
+}

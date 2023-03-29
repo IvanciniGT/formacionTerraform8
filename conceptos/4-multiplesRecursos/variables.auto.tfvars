@@ -3,7 +3,6 @@ numero_de_contenedores      = 4
 # Se antoja sencilla esta forma... pero... está limitada a solo un atributo
 contenedores_personalizados = {
                                 contenedorA =   8071
-                                contenedorB =   8091
                               }
 
 ## Que pasa si al rellenar los datos, repito contenedor... ups!!
@@ -28,7 +27,7 @@ contenedores_mas_personalizados_como_lista = [
                                     ip              = "127.0.0.1"
                                 },
                                 {
-                                    contenedor      = "contenedorA2"
+                                    contenedor      = "contenedorB2"
                                     puerto_externo  = 8093
                                 }
                               ]
