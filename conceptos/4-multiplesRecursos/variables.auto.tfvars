@@ -23,12 +23,12 @@ contenedores_mas_personalizados_como_mapa = {
 ## Lo va a machacar... pero quién se entera?  NADIE !
 contenedores_mas_personalizados_como_lista = [
                                 {
-                                    contenedor      = contenedorA2
+                                    contenedor      = "contenedorA2"
                                     puerto_externo  = 8083
                                     ip              = "127.0.0.1"
                                 },
                                 {
-                                    contenedor      = contenedorA2
+                                    contenedor      = "contenedorA2"
                                     puerto_externo  = 8093
                                 }
                               ]
