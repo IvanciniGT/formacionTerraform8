@@ -2,7 +2,7 @@ numero_de_contenedores      = 4
 
 # Se antoja sencilla esta forma... pero... está limitada a solo un atributo
 contenedores_personalizados = {
-                                contenedorA =   8081
+                                contenedorA =   8071
                                 contenedorB =   8091
                               }
 
@@ -10,10 +10,10 @@ contenedores_personalizados = {
 ## Lo va a machacar... pero quién se entera?  YO... ya que terraform me avisa que estoy DUPLICANDO CLAVE en el MAPA !
 contenedores_mas_personalizados_como_mapa = {
                                 contenedorA1 =   {
-                                    puerto_externo  = 8082
+                                    puerto_externo  = 8072
                                     ip              = "127.0.0.1"
                                 }
-                                contenedorA1 =   {
+                                contenedorB1 =   {
                                     puerto_externo  = 8092
                                 }
                               }
@@ -24,7 +24,7 @@ contenedores_mas_personalizados_como_mapa = {
 contenedores_mas_personalizados_como_lista = [
                                 {
                                     contenedor      = "contenedorA2"
-                                    puerto_externo  = 8083
+                                    puerto_externo  = 8073
                                     ip              = "127.0.0.1"
                                 },
                                 {

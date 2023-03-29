@@ -65,3 +65,14 @@ resource "docker_container" "mis_contenedores_personalizados" {
         ip          = "127.0.0.1"
     }
 }
+
+resource "docker_container" "mis_contenedores_mas_personalizados_desde_mapa" { 
+    for_each        = var.contenedores_mas_personalizados_como_mapa 
+    name            = each.key
+    image           = docker_image.mi_imagen.image_id 
+    ports {
+        internal    = 80           
+        external    = each.value.puerto_externo
+        ip          = each.value.ip
+    }
+}
