@@ -49,7 +49,7 @@ resource "docker_container" "mi_contenedor" {
                         
     # Esta sintaxis SOLO VALE PARA BLOQUES DINAMICOS!!!!!!!
     dynamic "ports" {
-        for_each        = var.puertos
+        for_each        = var.puertos # lista
         iterator        = puerto # Llamemos a cada uno de ellos "puerto"
         content{
             internal    = puerto.value.interno

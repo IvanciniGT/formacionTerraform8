@@ -23,7 +23,7 @@ resource "docker_image" "mi_imagen" {
 # UN RECURSO DE TIPO docker_container? NO
 # Al haber usao el count, devuelve una 
 # LISTA DE RECURSOS DE TIPO docker_container
-resource "docker_container" "mi_contenedor" { 
+resource "docker_container" "mis_contenedores" { 
     count           = var.numero_de_contenedores # Aqui pasamos un número
                       # Cuando usamos la palabra count, terraform em regala
                       # La variable count.index
@@ -33,6 +33,35 @@ resource "docker_container" "mi_contenedor" {
     ports {
         internal    = 80           
         external    = 8080 + count.index
+        ip          = "127.0.0.1"
+    }
+}
+# (2)
+# Cuando ataque a la variable docker_container.mis_contenedores_personalizados
+# que me devuelve?
+# UN RECURSO DE TIPO docker_container? NO
+# UNA LISTA DE RECURSOS DE TIPO docker_container?  NO
+# UNA MAPA DE RECURSOS DE TIPO docker_container, donde
+# las claves de ese mapa serán las mismas claves que se contiene el mapa sobre elq ue se hace el for_each
+resource "docker_container" "mis_contenedores_personalizados" { 
+    for_each        = var.contenedores_personalizados 
+                      # OJO!!! Este for_each es diferente del que 
+                      # usábamos en los dynamic blocks
+                      # En el caso de recursos, hemos de pasar:
+                      # - Una lista de strings (lo cual sirve para muy poco)
+                      # - Un mapa
+                      # No puedo pasar una lista que no sea de strings
+                      # Al usar for_each, terraform me regala la variable `each`
+                      # A la que le podré pedir:
+                      # - each.key
+                      # - each.value
+                      # OJO 2... ver (2)
+    
+    name            = each.key
+    image           = docker_image.mi_imagen.image_id 
+    ports {
+        internal    = 80           
+        external    = each.value
         ip          = "127.0.0.1"
     }
 }
