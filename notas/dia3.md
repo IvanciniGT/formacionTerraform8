@@ -82,6 +82,96 @@ Por ejemplo para:
     obtengo una referencia a una lista de recursos de tipo `TIPO`
     
     
-    
-    
-    
+---
+
+# PROVISIONADORES
+
+Son programas que se ejecutan asociados al ciclo de vida de un recurso:
+- Creación      -- 1 evento que puedo controlar (de forma única)
+- Modificación  -/
+- Destrucción   -- 1 evento que puedo controlar (de forma única)
+
+Un provisionador va asociado a 1 recurso... Se define DENTRO DEL BLOQUE DE UN RECURSO
+
+En terraform hay 3 provisionadores que pueden usarse. SOLO 3... ANTES HABIA MAS. YA NO. 3!!!!
+- local-exec    Ejecutar un comando donde está corriendo TERRAFORM
+                    PUES IGUAL... poco
+                        - prueba
+                        - al dar de alta una máquina... me puede interesa darla de alta en el CMDB
+                                                        o en un sistema de monitorizacion
+- remote-exec   Ejecutar un comando en otro entorno... el que sea... no necesariamente en el recurso que estamos configurando
+                Uso:
+                    - Crear un usuario en el remoto \
+                    - Crear unas carpetas            >  PERO ME CORTARIAN LAS UÑAS MUY CORTITAS Y ME METEN LAS MANOS EN UN BARREÑO CON ZUMO DE LIMON !!!!
+                    - Instalar unos programas       /       Para eso tenemos a Ansible... and company
+                    
+                    HEMOS DE INTENTAR USAR ESTO LO MENOS POSIBLE
+                    - Pruebas: Smoke Test
+                    - Para el que venga detrás... que pueda acceder:
+                        - servicio ssh corriendo...
+                        - puertos abiertos...
+                        - python instalado
+                        - clave ssh
+                        (realmente todo esto lo podría dejar realizado de antemano)... donde? 
+                            IMAGEN DE MAQUINA 
+                    
+- file          Copiar archivos del local (Donde corre terraform) a otro sitio... el que sea
+                Uso:
+                    - Fichero de configuración
+                    - Clave ssh
+
+---
+
+# Gestión del .tfstate
+
+## Cómo organizamos y gestionamos un proyecto de terarform en la empresa?
+
+Escribo un script de terraform... y a partir de ahí?                                            -> LO METO EN GIT
+Lo ejecuto... y al hacerlo, da lugar a un fichero .tfstate ???? Y que hago con ese fichero?     -> LO METO EN GIT
+        en qué repo? en el mismo que el script? 
+            - puede
+            - o puede que no, según me interese
+        No solo como backup.... si solo quiero que esté como backup... lo copio a un sistema de backup
+        En nuestro caso lo estamos subiendo a git.... que no es un sistema de backup... sino un 
+            sistema de control de versiones... YA QUE QUIERO CONTROLAR LA VERSION DE ESE FICHERO... y ver cómo va evoluacionando
+
+Pregunta.... cuántos ficheros .tfstate vamos a tener asociados a un script? 
+- 1?  Y si ejecuto el mismo script contra 7 entornos, con distintas parametrizaciones? 
+
+Terraform me da una forma de gestionar eso: Workspaces
+También lo puedo gestionar por mi cuenta y riesgo... con repos de git separados para el .tfstate y el script.
+Decisiones... organizativas.
+Quiero que la persona que se baje el script tenga acceso a todos los .tfstate?
+- Puede
+- O no
+
+---
+
+# Tipos de pruebas:
+
+## Tipos de Pruebas en Base al nivel de la prueba:
+
+- Unitarias                 Prueba DE UNA UNICA CARACTERISTICA sobre un compoente AISLADO
+- De integración            Prueba DE LA COMUNICACION entre 2 sistemas
+- De sistema (End2End)      Pruebo el COMPORTAMIENTO del sistema en su conjunto
+
+## Para qué sirven las pruebas?
+
+- Para comprobar si un requerimoento se Cumple
+- Identificar FALLOS    -- DEBUGGING --> Arreglar (previa identificación) los DEFECTOS
+- Suministrar información en caso de que se haya producido un fallo... para que el DEBUGGING sea más sencillo
+
+## Vocabulario en el mundo de las pruebas
+
+- Errores       Los ERRORES los cometemos los HUMANOS cuando nos equivocamos
+- Defectos      Un ERROR puede dar lugar a un DEFECTO en un sistema
+- Fallos        Ese DEFECTO puede o no manifestarse en forma de un FALLO
+
+---
+
+Cúantas veces se va a ejecutar nuestro script de terraform para un entorno? 
+1 cada vez que cambie la definición del entorno (parametrización)?
+Cada hora? Tiene sentido? DEVOPS !!!!!! y que bonita es la IDEMPOTENCIA!!!!!
+Si lo ejecuto cada hora, qué tengo? 
+- Un sistema de Monitorización
+- Junto con un doctor, que si ha habido algún problema me lo arregla... alguien torpe ha borrado el entorno

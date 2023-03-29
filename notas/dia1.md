@@ -67,7 +67,7 @@ Para automatizar el trabajo de MI LADO es cuando usamos TERRAFORM.
 
 # DEV--->OPS
 
-Cultura / movimiento en pro de la AUTOMATIZACION
+Cultura / movimiento en pro de la AUTOMATIZACION y MONITORIZACION
 
 Quiero automatizar TODO el trabajo.
 
@@ -209,7 +209,7 @@ En esos archivos vamos a declarar bloques de código. Esos bloques pueden ser de
                     Declarar la configuración que queremos usr para un determinado provider
 - resource          LUNES / MARTES
                     Declarar un recurso que gestionaremos a través de un provider
-    - provisioner   Declarar provisionadores asociados a un recurso:
+    - provisioner   Declarar provisionadores asociados a un recurso: MIERCOLES
                     Básicamente son programas/tareas que quiero ejecutar asociadas al ciclo de vida de un recurso
 - output            MARTES <<<<<<<<<<<<<<<<
                     Declarar datos que debemos ser capaces de extraer de los recursos (normalmente)

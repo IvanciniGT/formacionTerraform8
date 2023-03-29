@@ -87,7 +87,7 @@ JENKINS-------------------
 |   ^                    |
 |   ip                   ip
 v   |                    v
-TERRAFORM             ANSIBLE
+TERRAFORM -- NOOOO -->  ANSIBLE
 
 crear un servidor     planchar el servidor
 
