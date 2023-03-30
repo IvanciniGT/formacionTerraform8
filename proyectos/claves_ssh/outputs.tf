@@ -12,6 +12,7 @@ output "publicKey" {
 
 }
 output "privateKey" {
+    sensitive = true
 
     value   = ( length(tls_private_key.claves) == 1
                 ? {
