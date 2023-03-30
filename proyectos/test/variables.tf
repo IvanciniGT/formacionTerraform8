@@ -1,5 +1,18 @@
 variable "host" {
-    type    = string
+    description = "IP o nombre del host sobre el que realizar las pruebas"
+    type        = string
+    nullable    = false
+    
+    validation {
+        condition =
+        error_message = "El nombre o IP del host no es válido"
+    }
+}
+variable "whenDataChanges" {
+    description = "Indique el dato que de cambiar, fuerza la ejecución de la prueba"
+    type        = string
+    nullable    = false
+    default     = uuid()
 }
 
 variable "ping" {
@@ -9,6 +22,15 @@ variable "ping" {
                         })
     nullable    = true
     default     = null
+    
+    validation {
+        condition       = var.ping.initialDelay >= 0 && ceil(var.ping.initialDelay) == var.ping.initialDelay
+        error_message   = "El valor de initialDelay debe ser al menos 0"
+    }
+    validation {
+        condition       = var.ping.times >= 1 && ceil(var.ping.times) == var.ping.times
+        error_message   = "El valor de times debe ser al menos 1"
+    }
 }
 
 variable "ssh_connection" {
@@ -20,4 +42,15 @@ variable "ssh_connection" {
                         })
     nullable    = true
     default     = null
+    
+    validation {
+        condition       = var.ssh_connection.port >= 1 && var.ssh_connection.port <= 64000 && ceil(var.ssh_connection.port) == var.ssh_connection.port
+        error_message   = "El puerto debe estar entre 1 y 64000"
+    }
+    validation {
+        condition       = ((var.ssh_connection.password != null || var.ssh_connection.privateKey != null)
+                          && ! (var.ssh_connection.password != null && var.ssh_connection.privateKey != null))
+        
+        error_message   = "Debe suministrarse una contraseña o una clave privada para la conexión por ssh"
+    }
 }

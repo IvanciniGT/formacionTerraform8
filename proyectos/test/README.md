@@ -18,6 +18,10 @@ Variables
 - puerto ssh
 - usuario
 - password / clavePrivada
+- Cuando?
+    - Siempre que ejecute el script?
+        - Cuando haya cambio en la infra
+        - Aunque no haya cambio en la infra
 
 Los datos que queremos tener (información)
 Variables son "COMO ESTRUCTURAMOS ESA INFORMACION"
@@ -28,27 +32,20 @@ Siempre voy a querer hacer ambas pruebas?
 
 Outputs
 
+    
+          "aws_instance"
+resource "docker_container" "servidor"{
+    ....
+}
+
 
 
 
 module "pruebas" {
-    host    = "172.17.0.49"
-    
-    ping    = {}
-    ping    = {
-                    initialDelay = 10
-              }
-    ping    = {
-                    times = 5
-              }
-    ping    = {
-                    initialDelay = 10
-                    times = 5
-              }
-    
-    ssh_connection = {
-                        user = "root"
-                        password = "my-password"        # Este chequeo lo hace terraform??? Este es mio
-                        privateKey = "2342340abc..."
-                     }
+    host            = docker_container.servidor.ip
+    ping            = {}
+    ssh_connection  = {
+        user = "root"
+        password ="root"
+    }
 }
