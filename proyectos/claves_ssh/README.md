@@ -1,57 +1,76 @@
 # Modulo claves_ssh
 
-Debe permitir la generación de un par de claves ssh, que posteriormente poder usar dentro de nuestros scripts de terraform.
+Permite la generación de un par de claves ssh, que posteriormente poder usar dentro de nuestros scripts de terraform.
+También permite exportar/importar claves desde ficheros, en formato pem y openssh.
 
-- Generar la clave publica
-- Generar la clave privada
+## Algortimos soportados para las claves
 
-Pero esas claves...
-1. Las exportaré a ficheros.... en que formato?
-    - pem
-    - openssh
-   ... Y donde dejo esos ficheros? En alguna ruta que le definamos
-2. Llevarlos a un output del módulo
+| Algoritmo | Parametrización                 |
+| --------- | :-----------------------------: |
+| `RSA`     | Número de bits                  |
+| `ECDSA`   | `P224`, `P256`, `P384`, `P521`  |
+| `ED25519` | Ninguna                         |
 
-...
-Cuando genero un par de claves ssh.... hay algo configurable en ese proceso? Algoritmo y parámetros para ese algoritmo
-No todos los algoritmos admiten parametros ... ni siquiera los que los admiten admiten los mismos parametros.
+## Opciones de configuración:
 
-algorithm:  RSA, ECDSA, ED25519
-ecdsa_curve : P224, P256, P384, P521. (default: P224).
-rsa_bits : the size of the generated RSA key, in bits (default: 2048).
+### algoritmo
 
-Pregunta....
-Siempre que ejecute esto... debo generar un par de claves claves?
-Cuando querré generarlas?
-- Cuando no existan los ficheros
-  Si tengo los ficheros... que debería hacer el módulo? Llevar el contenido de los ficheros al output, 
-  para que esas claves estén disponibles al script
-- Cuando explícitamente me pidan que las regenere
+El algoritmo y su configuración para generar las claves ssh
 
----
+```tf
+algoritmo = {
+                    nombre          = "RSA"
+                    configuracion   = 4096
+              }
+```
+### directorio_ficheros_claves
 
-module "misclaves" {
-    sources = "El que sea"
-    
-    algoritmo
-    parametros del algoritmo
-    
-    ruta de los ficheros
-    
-    si se fuerza la regeneración de las claves
+Indica el directorio donde se generarán las claves.
+
+```tf
+directorio_ficheros_claves = "./claves"
+```
+
+### regenerar
+
+Indica si regeneraremos las claves aún existiendo los correspondientes ficheros en el directorio suministrado en 
+la propiedad: `directorio_ficheros_claves`
+
+```tf
+regenerar = true
+```
+
+## Outputs del módulo:
+
+### publicKey
+
+```tf
+publicKey.pem       # Devuelve la clave pública en formato pem
+publicKey.openssh   # Devuelve la clave pública en formato openssh
+```
+
+### privateKey
+
+```tf
+privateKey.pem       # Devuelve la clave privada en formato pem
+privateKey.openssh   # Devuelve la clave privada en formato openssh
+```
+
+
+## Ejemplo completo de uso:
+
+```tf
+module "claves_ssh" {
+    source = "DONDE OSTIAS ESTE ESTO"
+    algoritmo = {
+                    nombre          = "RSA"
+                    configuracion   = 4096
+                }
+    directorio_ficheros_claves = "./claves"
+    regenerar = false
 }
+```
 
-module.misclaves.publicKey
-module.misclaves.privateKey (openssh, pem)
+## Cualquier duda contactar con 
 
-
-
----
-
-Script: Crear máquina en Amazon
-
-module: mis_claves
-    source = Crear claves ssh
-
-modulo: Crar máquina en Amazon
-    publicKey = module.mis_claves.publicKey.pem
+<ivan.osuna.ayuste@gmail.com>

@@ -5,7 +5,7 @@ variable "algoritmo" {
                         })
     default = {
                     nombre          = "RSA"
-                    configuracion   = 2048
+                    configuracion   = 4096
               }
     nullable            = false
     description         = "Algoritmo que debe usarse para la generación de la clave ssh, junto con su cofiguración"
@@ -23,7 +23,7 @@ variable "algoritmo" {
         condition       = ( upper(var.algoritmo.nombre) != "ECDSA" 
                                 ? true 
                                 : contains(["P224", "P256", "P384", "P521"], upper(var.algoritmo.configuracion) )
-        error_message   = "Para el algoritmo ECDSA debe suministrar uno de estos valors para la configuración: P224, P256, P384, P521"
+        error_message   = "Para el algoritmo ECDSA debe suministrar uno de estos valores para la configuración: P224, P256, P384, P521"
     }
     validation {
         condition       = ( upper(var.algoritmo.nombre) != "RSA" 
