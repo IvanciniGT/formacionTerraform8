@@ -4,15 +4,15 @@ variable "host" {
     nullable    = false
     
     validation {
-        condition =
+        condition = var.host != null # TODO
         error_message = "El nombre o IP del host no es válido"
     }
 }
 variable "whenDataChanges" {
     description = "Indique el dato que de cambiar, fuerza la ejecución de la prueba"
     type        = string
-    nullable    = false
-    default     = uuid()
+    nullable    = true
+    default     = null
 }
 
 variable "ping" {
@@ -24,11 +24,11 @@ variable "ping" {
     default     = null
     
     validation {
-        condition       = var.ping.initialDelay >= 0 && ceil(var.ping.initialDelay) == var.ping.initialDelay
+        condition       = var.ping == null ? true : (var.ping.initialDelay >= 0 && ceil(var.ping.initialDelay) == var.ping.initialDelay)
         error_message   = "El valor de initialDelay debe ser al menos 0"
     }
     validation {
-        condition       = var.ping.times >= 1 && ceil(var.ping.times) == var.ping.times
+        condition       = var.ping == null ? true : (var.ping.times >= 1 && ceil(var.ping.times) == var.ping.times)
         error_message   = "El valor de times debe ser al menos 1"
     }
 }
@@ -44,12 +44,12 @@ variable "ssh_connection" {
     default     = null
     
     validation {
-        condition       = var.ssh_connection.port >= 1 && var.ssh_connection.port <= 64000 && ceil(var.ssh_connection.port) == var.ssh_connection.port
+        condition       = var.ssh_connection == null ? true : (var.ssh_connection.port >= 1 && var.ssh_connection.port <= 64000 && ceil(var.ssh_connection.port) == var.ssh_connection.port)
         error_message   = "El puerto debe estar entre 1 y 64000"
     }
     validation {
-        condition       = ((var.ssh_connection.password != null || var.ssh_connection.privateKey != null)
-                          && ! (var.ssh_connection.password != null && var.ssh_connection.privateKey != null))
+        condition       = var.ssh_connection == null ? true : (((var.ssh_connection.password != null || var.ssh_connection.privateKey != null)
+                          && ! (var.ssh_connection.password != null && var.ssh_connection.privateKey != null)))
         
         error_message   = "Debe suministrarse una contraseña o una clave privada para la conexión por ssh"
     }

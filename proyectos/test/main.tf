@@ -9,12 +9,12 @@ resource "null_resource" "ping_test" {
     count       = var.ping == null ? 0 : 1
 
     triggers    = {
-                    cuando = var.whenDataChanges
+                    cuando = var.whenDataChanges == null ? uuid() : var.whenDataChanges
                   }
 
     provisioner "local-exec" {
         command = <<EOT
-                    sleep ${initialDelay}
+                    sleep ${var.ping.initialDelay}
                     ping -c ${var.ping.times} ${var.host}
                     EOT
     }
@@ -26,7 +26,7 @@ resource "null_resource" "ssh_connection_test" {
     count       = var.ssh_connection == null ? 0 : 1
 
     triggers    = {
-                    cuando = var.whenDataChanges
+                    cuando = var.whenDataChanges == null ? uuid() : var.whenDataChanges
                   }
     
     connection {
