@@ -8,6 +8,14 @@ variable "host" {
         error_message = "El nombre o IP del host no es válido"
     }
 }
+
+variable "continue_on_failure"{
+    description = "Debe continuar el script en caso de error en las pruebas"
+    type        = bool
+    default     = true
+    nullable    = false
+}
+
 variable "whenDataChanges" {
     description = "Indique el dato que de cambiar, fuerza la ejecución de la prueba"
     type        = string

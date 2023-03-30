@@ -14,9 +14,12 @@ resource "null_resource" "ping_test" {
 
     provisioner "local-exec" {
         command = <<EOT
+                    rm -rf ./ping.exit.code
                     sleep ${var.ping.initialDelay}
                     ping -c ${var.ping.times} ${var.host}
+                    echo $? > ./ping.exit.code
                     EOT
+        on_failure = continue #var.continue_on_failure ? continue : fail
     }
     
 }
