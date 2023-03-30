@@ -22,7 +22,7 @@ variable "algoritmo" {
     validation {
         condition       = ( upper(var.algoritmo.nombre) != "ECDSA" 
                                 ? true 
-                                : contains(["P224", "P256", "P384", "P521"], upper(var.algoritmo.configuracion) )
+                                : contains(["P224", "P256", "P384", "P521"], upper(var.algoritmo.configuracion) ) )
         error_message   = "Para el algoritmo ECDSA debe suministrar uno de estos valores para la configuración: P224, P256, P384, P521"
     }
     validation {
@@ -47,7 +47,7 @@ variable "directorio_ficheros_claves" {
     nullable        = false
     
     validation {
-        condition     = length(regexall("^((([.]{1,2}[\\/])|[\\/])?([a-zA-Z0-9_-]+[\\/]?))|[.]+$", var.directorio_claves )) == 1
+        condition     = length(regexall("^((([.]{1,2}[\\/])|[\\/])?([a-zA-Z0-9_-]+[\\/]?))|[.]+$", var.directorio_ficheros_claves )) == 1
         error_message = "Debe introducir una ruta local"
     }
 }
@@ -55,7 +55,7 @@ variable "directorio_ficheros_claves" {
 
 variable "regenerar" {
     description = "Indica si deben generarse nuevas claves ssh, aun existiendo unas claves en el directorio suministrado"
-    type        = boolean 
+    type        = bool
     default     = false
     nullable    = false
 }
