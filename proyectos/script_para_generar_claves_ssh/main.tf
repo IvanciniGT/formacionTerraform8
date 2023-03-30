@@ -1,9 +1,8 @@
 module "claves_ssh" {
     source = "../claves_ssh"
     algoritmo = {
-                    nombre          = "RSA"
-                    configuracion   = 4096
+                    nombre          = "ED25519"
                 }
-    directorio_ficheros_claves = "./claves"
+    directorio_ficheros_claves = "misclaves"
     regenerar = false
 }

@@ -47,7 +47,7 @@ variable "directorio_ficheros_claves" {
     nullable        = false
     
     validation {
-        condition     = length(regexall("^((([.]{1,2}[\\/])|[\\/])?([a-zA-Z0-9_-]+[\\/]?))|[.]+$", var.directorio_ficheros_claves )) == 1
+        condition     = length(regexall("^(((([.]{1,2}[\\/])|[\\/])?([a-zA-Z0-9_-]+[\\/]?))|[.]+)$", var.directorio_ficheros_claves )) == 1
         error_message = "Debe introducir una ruta local"
     }
 }
