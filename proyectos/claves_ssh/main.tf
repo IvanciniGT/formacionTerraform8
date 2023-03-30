@@ -20,10 +20,10 @@ locals {
                                                 local.existe_fichero_clave_privada_pem      &&
                                                 local.existe_fichero_clave_privada_openssh   )
     
-    contenido_fichero_clave_publica_openssh = file(local.ruta_fichero_clave_publica_openssh)
-    contenido_fichero_clave_publica_pem     = file(local.ruta_fichero_clave_publica_pem)
-    contenido_fichero_clave_privada_openssh = file(local.ruta_fichero_clave_privada_openssh)
-    contenido_fichero_clave_privada_pem     = file(local.ruta_fichero_clave_privada_pem)
+    contenido_fichero_clave_publica_openssh = local.existe_fichero_clave_publica_openssh ? file(local.ruta_fichero_clave_publica_openssh)  : null
+    contenido_fichero_clave_publica_pem     = local.existe_fichero_clave_publica_pem     ? file(local.ruta_fichero_clave_publica_pem)      : null
+    contenido_fichero_clave_privada_openssh = local.existe_fichero_clave_privada_openssh ? file(local.ruta_fichero_clave_privada_openssh)  : null
+    contenido_fichero_clave_privada_pem     = local.existe_fichero_clave_privada_pem     ? file(local.ruta_fichero_clave_privada_pem)      : null
 } 
 
 resource "tls_private_key" "claves" {
