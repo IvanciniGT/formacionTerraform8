@@ -20,7 +20,7 @@ resource "docker_container" "mi_contenedor" {
 
 module "pruebas" {
     source          = "../test"
-    host            = "ruina" #docker_container.mi_contenedor.network_data[0].ip_address
+    host            = "${docker_container.mi_contenedor.network_data[0].ip_address}"
     ping            = {}
 }
 

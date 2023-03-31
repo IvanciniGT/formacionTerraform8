@@ -49,3 +49,23 @@ module "pruebas" {
         password ="root"
     }
 }
+---
+
+CLOUD
+
+quiero una máquina en una vpc
+
+variable vpc_name
+
+recurso vpc
+    vpc_name
+
+recurso subnet
+    vpc.vpc_name
+    # depends_on vpc.  UNA PRACTICA HORRIBLE EN TERRAFORM
+
+recurso reglas firewall red
+    vpc_name
+
+recurso maquina
+    vpc_name
